@@ -1,0 +1,47 @@
+<ion-view view-title="Details">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+
+    <div class="list card">
+      <b>{{item.movieName}}</b>
+      <div class="item ">
+        <img src="{{item.imgLink}}" style="width: 52%;float: left">
+        <div style="float: right">
+          <span ng-if="item.date"><br>{{item.date| date:'MMM d'}} </span>
+          <span ng-if="item.timing">{{item.timing}}</span>
+          <span ng-if="item.screen"><br>{{item.screen}}</span>
+          <span ng-if="item.rating"><br>IMDb:{{item.rating}}</span>
+          <span ng-if="item._2d_3d"><br>{{item._2d_3d}}</span>
+        </div>
+
+      </div>
+      <span ng-if="item.cenima"><b>Cenima: </b>{{item.cenima}}</span>
+      <br>
+      <span ng-if="item.description"><b>Description: </b><br>{{item.description}}</span>
+      <br>
+      <span ng-if="item.Genre"><b>Genre: </b>{{item.Genre}}</span>
+      <br>
+      <span ng-if="item.directorName"><b>Director: </b>{{item.directorName}}</span>
+      <br>
+      <span ng-if="item.cast"><b>Cast: </b>{{item.cast}}</span>
+      <br>
+      <span ng-if="item.runningTime"><b>Running Time: </b>{{item.runningTime}}</span>
+      <br>
+      <span ng-if="item.ReleaseDate"><b>Release Date: </b>{{item.ReleaseDate}}</span>
+      <br>
+
+      <h4 ng-if="item.trailerLink">Trailer:</h4>
+        <iframe  ng-src="{{trustSrc }}" height="100%" width="100%"></iframe>
+      <br>
+      </div>
+
+
+
+
+
+  </ion-content>
+</ion-view>
+
+
