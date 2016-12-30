@@ -1,0 +1,9 @@
+ionic add platform android
+ionic android --release
+ionic build android --release --stacktrace // to make apk
+
+keytool -genkey -v -keystore my.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias ShowTime  // to make signing
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my.keystore ShowTime.apk ShowTime  // to od signing 
+
+adb -d install ShowTime.apk  // to install app to device
