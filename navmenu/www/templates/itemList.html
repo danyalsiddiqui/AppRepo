@@ -1,19 +1,19 @@
-<ion-view  view-title="Home">
-  <ion-nav-bar class="bar-positive">
-    <ion-nav-back-button></ion-nav-back-button>
-  </ion-nav-bar>
+<ion-view view-title="Movie Time">
 
+  <div class="bar bar-subheader ">
+    <label class=" item-select col col-100"  >
 
-  <ion-content>
-    <ion-refresher on-refresh="refresh()"></ion-refresher>
+       <b> Select Movie</b>
 
-    <label class="item item-input item-select" >
-      <div class="input-label" >
-        Select Movie
-        <select ng-options="movie as movie.movieName for movie in movies track by movie.movieName" ng-model="selected"></select>
-      </div>
+          <select ng-options="movie as movie.movieName for movie in movies track by movie.movieName" ng-model="selected"></select>
     </label>
 
+  </div>
+
+  <ion-content class="has-subheader">
+
+
+    <ion-refresher on-refresh="refresh()"></ion-refresher>
 
     <div class="list">
 

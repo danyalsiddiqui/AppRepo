@@ -66,6 +66,20 @@ angular.module('starter.controllers', [])
         //this always gets called
         console.log(status);
       });
+
+    $http.jsonp('https://moviestime.herokuapp.com/getCenima?callback=JSON_CALLBACK')
+      .success(function (result) {
+        result.push(JSON.parse('{"cenima":"ALL"}'));
+        result.reverse();
+        $rootScope.cenima = result;
+        $rootScope.CenimaSelected = $rootScope.cenima[0];
+      })
+      .error(function (data, status, headers, config) {
+        //this always gets called
+        console.log(status);
+      });
+
+
     $scope.refresh = function() {
 
       $http.jsonp('https://moviestime.herokuapp.com/listData?callback=JSON_CALLBACK')
@@ -94,6 +108,62 @@ var id=$stateParams.itemId;
     }
   })
 
+  .controller('PopupCrtl',function ($scope,$stateParams,$rootScope,$ionicPopup) {
+    $scope.currentDate = new Date();
+    $scope.datePickerCallback = function (val) {
+      if (!val) {
+        console.log('Date not selected');
+      } else {
+        console.log('Selected date is : ', val);
+      }
+    };
+    $scope.filterPopup= function(){
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'SEARCH BY CHOICE',
+        template: ' <label class=" col col-100"  > <b> Select Cenima</b> </label>'+
+        ' <select ng-options="cenima as cenima.cenima for cenima in cenima track by cenima.cenima" class=" col col-100" ng-model="CenimaSelected"></select>'+
+        ' <label class=" col col-100"  > <b> Select Date</b> </label>'+
+          '<input class="my-date-time-picker" type="date"  ng-model="currentDate" ng-click="popup()" >',
+         // '<input type="date" >',
+        //' <select ng-options="cenima as cenima.cenima for cenima in cenima track by cenima.cenima" class=" col col-100" ng-model="CenimaSelected"></select>',
+        buttons: [{
+          text: 'Filter',
+          type: 'button-block button-outline button-stable',
+          scope: null,
+          onTap: function(e) {
+            $scope.showAlert();
+          }
 
+        }, {
+          text: 'Back',
+          type: 'button-block button-outline button-stable',
+          onTap: function(e) {
+
+          }
+        }]
+      });
+      confirmPopup.then(function(res){
+        if(res){
+
+        }else{
+
+        }
+      });
+    };
+
+    // permissions
+    $scope.showAlert = function() {
+      var alertPopup = $ionicPopup.alert({
+        title: 'we would like yo access',
+        template: '<i class="ion-android-contacts"></i> Contact <br/> <i class="ion-android-locate"></i> Location',
+        okType: 'button-block button-outline button-stable',
+
+      });
+      alertPopup.then(function(res) {
+        console.log(45);
+      });
+    };
+
+  })
 
 ;
