@@ -55,6 +55,9 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams,$rootScope) {
 })
   .controller('ItemListCtrl',function ($http,$scope,$rootScope) {
+    $rootScope.CurrentDate = {
+      value: new Date()
+    };
     $http.jsonp('https://moviestime.herokuapp.com/getMovies?callback=JSON_CALLBACK')
       .success(function (result) {
         result.push(JSON.parse('{"movieName":"ALL"}'));
@@ -108,30 +111,23 @@ var id=$stateParams.itemId;
     }
   })
 
-  .controller('PopupCrtl',function ($scope,$stateParams,$rootScope,$ionicPopup) {
-    $scope.currentDate = new Date();
-    $scope.datePickerCallback = function (val) {
-      if (!val) {
-        console.log('Date not selected');
-      } else {
-        console.log('Selected date is : ', val);
-      }
-    };
+  .controller('PopupCrtl',function ($scope,$stateParams,$rootScope,$ionicPopup,$http) {
     $scope.filterPopup= function(){
       var confirmPopup = $ionicPopup.confirm({
         title: 'SEARCH BY CHOICE',
         template: ' <label class=" col col-100"  > <b> Select Cenima</b> </label>'+
         ' <select ng-options="cenima as cenima.cenima for cenima in cenima track by cenima.cenima" class=" col col-100" ng-model="CenimaSelected"></select>'+
         ' <label class=" col col-100"  > <b> Select Date</b> </label>'+
-          '<input class="my-date-time-picker" type="date"  ng-model="currentDate" ng-click="popup()" >',
-         // '<input type="date" >',
+        '     <input type="date"  name="input" ng-model="CurrentDate.value" placeholder="yyyy-MM-dd" min="CurrentDate.value"  />',
+
+          // /'<input class="my-date-time-picker" type="date"  value="{{currentDate}}" >',
         //' <select ng-options="cenima as cenima.cenima for cenima in cenima track by cenima.cenima" class=" col col-100" ng-model="CenimaSelected"></select>',
         buttons: [{
           text: 'Filter',
-          type: 'button-block button-outline button-stable',
+          type: 'button-block button-positive',
           scope: null,
           onTap: function(e) {
-            $scope.showAlert();
+            $scope.applyfilter();
           }
 
         }, {
@@ -152,16 +148,16 @@ var id=$stateParams.itemId;
     };
 
     // permissions
-    $scope.showAlert = function() {
-      var alertPopup = $ionicPopup.alert({
-        title: 'we would like yo access',
-        template: '<i class="ion-android-contacts"></i> Contact <br/> <i class="ion-android-locate"></i> Location',
-        okType: 'button-block button-outline button-stable',
-
-      });
-      alertPopup.then(function(res) {
-        console.log(45);
-      });
+    $scope.applyfilter = function() {
+      debugger;
+      $http.jsonp('https://moviestime.herokuapp.com/filterByCenimaAndDate?movie=FORTRESS MALL - LAHORE&date=2016-12-29&callback=JSON_CALLBACK')
+        .success(function (result) {
+          $rootScope.items = result;
+        })
+        .error(function (data, status, headers, config) {
+          //this always gets called
+          console.log(status);
+        });
     };
 
   })
