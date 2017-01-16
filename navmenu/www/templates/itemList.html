@@ -5,7 +5,7 @@
 
        <b> Select Movie</b>
 
-          <select ng-options="movie as movie.movieName for movie in movies track by movie.movieName" ng-model="selected"></select>
+          <select ng-options="movie as movie.movieName for movie in movies track by movie.movieName" ng-model="selected" ng-change="filterBySelectValue(selected)"></select>
     </label>
 
   </div>
